@@ -1,16 +1,42 @@
 package com.concordia.flight.radar.dbUtils;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-
 public class DBConnection {
-
+	
 	private static final Logger log = Logger.getLogger(DBConnection.class);
 	private Connection conn = null;
+	
+	private static Map<String, String> dbProperties = new HashMap<>();
+	static {
+		try (FileReader reader = new FileReader("src/main/resources/Properties/db.properties")) {
+			Properties p = new Properties();
+			p.load(reader);
+			Set<Entry<Object, Object>> set = p.entrySet();
+			Iterator<Entry<Object, Object>> itr = set.iterator();
+			while (itr.hasNext()) {
+				Entry<Object, Object> entry = itr.next();
+				dbProperties.put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void close() {
 		if (conn != null) {
@@ -24,11 +50,27 @@ public class DBConnection {
 		}
 	}
 
-	public Connection getConnection() throws SQLException {
+	public Connection getConnection() throws SQLException, Exception {
+		Class.forName("com.mysql.jdbc.Driver");
 		if (conn == null) {
 			log.info("Opening connection to sampleDB");
-			conn = DriverManager.getConnection("jdbc:hsqldb:mem:sampleDB", "SA", "");
+
+			System.out.print(dbProperties);
+			conn = DriverManager.getConnection(dbProperties.get("jdbc.url"), dbProperties.get("jdbc.username"),
+					dbProperties.get("jdbc.password"));
 		}
 		return conn;
+	}
+
+	public static void main(String args[]) {
+		System.out.print(dbProperties);
+		try {
+			DBConnection connection = new DBConnection();
+			Connection conn = connection.getConnection();
+			connection.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		;
 	}
 }
