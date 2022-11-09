@@ -16,10 +16,10 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 public class DBConnection {
-	
+
 	private static final Logger log = Logger.getLogger(DBConnection.class);
 	private Connection conn = null;
-	
+
 	private static Map<String, String> dbProperties = new HashMap<>();
 	static {
 		try (FileReader reader = new FileReader("src/main/resources/Properties/db.properties")) {
@@ -32,16 +32,16 @@ public class DBConnection {
 				dbProperties.put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			log.error("Unable to load/file not found db properties files", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("Unable to read db properties files", e);
 		}
 	}
 
 	public void close() {
 		if (conn != null) {
 			try {
-				log.info("Closing database connection to sampleDB");
+				log.info("Closing database connection");
 				conn.close();
 			} catch (SQLException e) {
 				log.error("Unable to close connection", e);
@@ -50,27 +50,19 @@ public class DBConnection {
 		}
 	}
 
-	public Connection getConnection() throws SQLException, Exception {
-		Class.forName("com.mysql.jdbc.Driver");
+	public Connection getConnection() {
 		if (conn == null) {
-			log.info("Opening connection to sampleDB");
-
-			System.out.print(dbProperties);
-			conn = DriverManager.getConnection(dbProperties.get("jdbc.url"), dbProperties.get("jdbc.username"),
-					dbProperties.get("jdbc.password"));
+			log.info("Opening connection");
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				System.out.print(dbProperties);
+				conn = DriverManager.getConnection(dbProperties.get("jdbc.url"), dbProperties.get("jdbc.username"),
+						dbProperties.get("jdbc.password"));
+			} catch (Exception e) {
+				log.error("Unable to eastablish db connection", e);
+			}
 		}
 		return conn;
 	}
 
-	public static void main(String args[]) {
-		System.out.print(dbProperties);
-		try {
-			DBConnection connection = new DBConnection();
-			Connection conn = connection.getConnection();
-			connection.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		;
-	}
 }

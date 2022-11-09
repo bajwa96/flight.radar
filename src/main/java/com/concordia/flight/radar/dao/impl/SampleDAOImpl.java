@@ -1,6 +1,5 @@
-package com.concordia.flight.radar.dbUtils;
+package com.concordia.flight.radar.dao.impl;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,68 +9,19 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.concordia.flight.radar.dao.SampleDao;
+import com.concordia.flight.radar.dbUtils.CommonDbUtil;
+import com.concordia.flight.radar.dbUtils.DBConnection;
+import com.concordia.flight.radar.pojo.SamplePerson;
 
-public class SampleDAO {
+
+public class SampleDAOImpl extends CommonDbUtil implements SampleDao{
+
+	SampleDAOImpl() {
+		super();
+	}
 
 	private static final Logger log = Logger.getLogger(DBConnection.class.getName());  
-
-    private Connection conn;
-
-    /**
-     * Create a table in the database
-     */
-    public boolean createTable() {
-        boolean success = false;
-        if (conn != null) {
-            Statement stmt = null;
-
-            try {
-                stmt = conn.createStatement();
-                stmt.execute("CREATE TABLE sample_table (id INT IDENTITY, first_name VARCHAR(30), last_name VARCHAR(30), age INT)");
-                log.info("Creating sample_table");
-                success = true;
-            } catch (SQLException e) {
-                log.error("Unable to create the database table", e);
-            } finally {
-                if (stmt != null) {
-                    try {
-                        stmt.close();
-                    } catch (SQLException e) {
-                    }
-                }
-            }
-        }
-        return success;
-    }
-
-    /**
-     * Remove our sample table
-     *
-     * @return
-     */
-    public boolean dropTable() {
-        boolean success = false;
-        if (conn != null) {
-            Statement stmt = null;
-
-            try {
-                stmt = conn.createStatement();
-                stmt.execute("DROP TABLE sample_table");
-                log.info("Deleting sample_table");
-                success = true;
-            } catch (SQLException e) {
-                log.error("Unable to create the database table", e);
-            } finally {
-                if (stmt != null) {
-                    try {
-                        stmt.close();
-                    } catch (SQLException e) {
-                    }
-                }
-            }
-        }
-        return success;
-    }
 
     /**
      * Insert a person into the database
@@ -155,6 +105,7 @@ public class SampleDAO {
      * @param id
      * @return
      */
+    @Override
     public SamplePerson getPersonById(int id) {
         SamplePerson person = null;
         if (conn != null) {
@@ -187,14 +138,5 @@ public class SampleDAO {
         }
 
         return person;
-    }
-
-    /**
-     * Assign the connection to use for this DAO
-     *
-     * @param conn
-     */
-    public void setConn(Connection conn) {
-        this.conn = conn;
     }
 }
