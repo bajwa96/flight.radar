@@ -2,17 +2,15 @@ package com.concordia.flight.radar.dbUtils;
 
 import java.sql.Connection;
 
-//import org.apache.log4j.Logger;
-
 public class CommonDbUtil {
 	protected Connection conn;
 
 	protected CommonDbUtil() {
-		conn = new DBConnection().getConnection();
+		conn = DBConnection.getInstance().getConnection();
 	}
 	
 	protected void newDBConnection() {
-		conn = new DBConnection().getConnection();
+		conn = DBConnection.getInstance().getConnection();
 	}
 	
 	protected void closeConnection() throws Exception {

@@ -38,7 +38,11 @@ public class DBConnection {
 		}
 	}
 
-	public void close() {
+	public static DBConnection getInstance() {
+		return new DBConnection();
+	}
+	
+	protected void close() {
 		if (conn != null) {
 			try {
 				log.info("Closing database connection");
@@ -50,7 +54,7 @@ public class DBConnection {
 		}
 	}
 
-	public Connection getConnection() {
+	protected Connection getConnection() {
 		if (conn == null) {
 			log.info("Opening connection");
 			try {

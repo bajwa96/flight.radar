@@ -15,8 +15,8 @@ public class CountryDaoImpl implements CountryDao {
 	private static final Logger log = Logger.getLogger(CountryDaoImpl.class);
 
 	private static final String INSERT_QUERY = "INSERT IGNORE INTO flightRadar.Country\n"
-			+ "(name, code, code3, updateTime, updateUser, createTime, createUser)\n" + "VALUES(?, ?, ?, ?, ?, ?, ?)"
-			+ "ON DUPLICATE KEY UPDATE name=?, code3=?, updateUser=?, updateTime=?;";
+			+ "(name, code, code3, update_time, update_user, create_time, create_user)\n" + "VALUES(?, ?, ?, ?, ?, ?, ?)"
+			+ "ON DUPLICATE KEY UPDATE name=?, code3=?, update_user=?, update_time=?;";
 
 	private Connection conn;
 
