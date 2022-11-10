@@ -1,7 +1,17 @@
 package com.concordia.flight.radar.pojo;
 
-import java.sql.Date;
+import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@Entity
+@Table(name = "flightInfo")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class FlightInfo extends BasePojo {
 	private Integer flightInfoPkId;
 	private String hex;
@@ -22,6 +32,16 @@ public class FlightInfo extends BasePojo {
 	private String arrIcao;
 	private String airlineIcao;
 	private String airlineIata;
+	private String aircraftIcao;
+
+	public String getAircraftIcao() {
+		return aircraftIcao;
+	}
+
+	public void setAircraftIcao(String aircraftIcao) {
+		this.aircraftIcao = aircraftIcao;
+	}
+
 	private Date updated;
 	private String status;
 

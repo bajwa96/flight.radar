@@ -19,6 +19,11 @@ public class DBConnection {
 
 	private static final Logger log = Logger.getLogger(DBConnection.class);
 	private Connection conn = null;
+	private static DBConnection instance;
+
+	private DBConnection() {
+
+	}
 
 	private static Map<String, String> dbProperties = new HashMap<>();
 	static {
@@ -39,9 +44,22 @@ public class DBConnection {
 	}
 
 	public static DBConnection getInstance() {
-		return new DBConnection();
+		if (instance == null) {
+			instance = new DBConnection();
+			return instance;
+		} else
+			try {
+				if (instance.getConnection().isClosed())
+					return new DBConnection();
+				else
+					return instance;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return instance;
 	}
-	
+
 	protected void close() {
 		if (conn != null) {
 			try {

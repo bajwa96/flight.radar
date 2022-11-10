@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 
 import com.concordia.flight.radar.fetchDataApi.APIBaseClass;
 import com.concordia.flight.radar.fetchDataApi.ApiUrl;
@@ -13,6 +14,7 @@ import com.concordia.flight.radar.manager.CountryManager;
 import com.concordia.flight.radar.managerImpl.CountryManagerImpl;
 import com.concordia.flight.radar.pojo.Country;
 
+@Service
 public class LoadCountriesProcessor {
 	private static final Logger log = Logger.getLogger(LoadCountriesProcessor.class);
 

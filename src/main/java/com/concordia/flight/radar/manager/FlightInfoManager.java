@@ -6,6 +6,8 @@ import com.concordia.flight.radar.pojo.FlightInfo;
 
 public interface FlightInfoManager {
 
-	void createOrUpdate(List<FlightInfo> flightInfoList);
+	void createTable() throws Exception;
+
+	void flushAndFillFlightInfo(List<FlightInfo> flightInfoList) throws Exception;
 
 }
