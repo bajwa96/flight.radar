@@ -10,4 +10,6 @@ public interface FlightInfoManager {
 
 	void flushAndFillFlightInfo(List<FlightInfo> flightInfoList) throws Exception;
 
+	List<FlightInfo> retrieveRecords();
+
 }

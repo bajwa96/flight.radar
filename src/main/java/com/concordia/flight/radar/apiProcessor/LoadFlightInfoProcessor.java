@@ -8,7 +8,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.stereotype.Service;
 
 import com.concordia.flight.radar.fetchDataApi.APIBaseClass;
 import com.concordia.flight.radar.fetchDataApi.ApiUrl;
@@ -16,17 +15,17 @@ import com.concordia.flight.radar.manager.FlightInfoManager;
 import com.concordia.flight.radar.managerImpl.FlightInfoManagerImpl;
 import com.concordia.flight.radar.pojo.FlightInfo;
 
-@Service
 public class LoadFlightInfoProcessor {
 	private static final Logger log = Logger.getLogger(LoadFlightInfoProcessor.class);
 
 	private FlightInfoManager flightInfoManager;
 
-	public LoadFlightInfoProcessor() {
+	private void initialize() {
 		flightInfoManager = new FlightInfoManagerImpl();
 	}
 
 	public void loadFlightInfoIntoDb() throws Exception {
+		initialize();
 		String countriesFromApi = APIBaseClass.getInstance().doGetCall(ApiUrl.FLIGHT_INFO_URL);
 		log.info("going to parse countries data from api");
 		List<FlightInfo> flightInfoList = parseDataFromApi(countriesFromApi);
@@ -85,7 +84,7 @@ public class LoadFlightInfoProcessor {
 				}
 				if (curr.has("aircraft_icao"))
 					flightInfo.setAircraftIcao(curr.getString("aircraft_icao"));
-				
+
 				flightInfo.setStatus(curr.getString("status"));
 				flightInfo.setCreateTime(new Date());
 				flightInfo.setCreateUser(this.getClass().getTypeName());
