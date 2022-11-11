@@ -2,7 +2,12 @@ package com.concordia.flight.radar.pojo;
 
 import java.util.Date;
 
-public class BasePojo {
+/**
+ * Base pojo contains the audit columns which could be used by various db objects
+ * instead of declaring them in every class declaring them in common class
+ *
+ */
+public abstract class BasePojo {
 	private String createUser;
 	private String updateUser;
 	private Date createTime;
@@ -31,4 +36,6 @@ public class BasePojo {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
+	
+	public abstract String toString();
 }

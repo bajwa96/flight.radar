@@ -12,7 +12,9 @@ public interface FlightInfoDao {
 
 	void deleteRecordsFromFlightInfo() throws Exception;
 
-	List<FlightInfo> retrieveRecords() throws Exception;;
+	List<FlightInfo> retrieveRecords() throws Exception;
+
+	List<FlightInfo> retrieveRecordsFromDbBasedOnCountryNameOrCode(String countryNameOrCode) throws Exception;
 	
 
 }

@@ -46,13 +46,10 @@ public class DBConnection {
 	public static DBConnection getInstance() {
 		if (instance == null) {
 			instance = new DBConnection();
-			return instance;
 		} else
 			try {
 				if (instance.getConnection().isClosed())
-					return new DBConnection();
-				else
-					return instance;
+					instance = new DBConnection();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

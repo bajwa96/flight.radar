@@ -24,15 +24,22 @@ public class FlighInfoController extends AbstractRestHandler {
 	@Autowired
 	private HandleFlightInfoUpdateRequest handleFlightInfoUpdateRequest;
 
-	@RequestMapping(value = "/{query}", method = RequestMethod.GET, produces = { "application/json",
+	@RequestMapping(method = RequestMethod.GET, produces = { "application/json",
 			"application/xml" })
 	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody List<FlightInfo> getFlightInfo(@PathVariable("query") String query, HttpServletRequest request,
+	public @ResponseBody List<FlightInfo> getFlightInfo(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-
-		handleFlightInfoUpdateRequest.processUpdateFlightAndCountryInfo();
 		List<FlightInfo> result = handleFlightInfoUpdateRequest.retrieveRecordsFromDb();
+		checkResourceFound(result);
+		return result;
+	}
 
+	@RequestMapping(value = "country/{countryNameOrCode}", method = RequestMethod.GET, produces = { "application/json",
+			"application/xml" })
+	@ResponseStatus(HttpStatus.OK)
+	public @ResponseBody List<FlightInfo> getFlightInfoCountrySpecific(@PathVariable("countryNameOrCode") String countryNameOrCode, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		List<FlightInfo> result = handleFlightInfoUpdateRequest.retrieveRecordsFromDbBasedOnCountryNameOrCode(countryNameOrCode);
 		checkResourceFound(result);
 		return result;
 	}

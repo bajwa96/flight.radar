@@ -72,4 +72,19 @@ public class FlightInfoManagerImpl extends ManagerBase implements FlightInfoMana
 		return null;
 	}
 
+	@Override
+	public List<FlightInfo> retrieveRecordsFromDbBasedOnCountryNameOrCode(String countryNameOrCode) {
+		try {
+			preConfig();
+			List<FlightInfo> obj=  flightInfoDao.retrieveRecordsFromDbBasedOnCountryNameOrCode(countryNameOrCode);
+			postConfig();
+			return obj;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			failedTransaactionHandler();
+		}
+		return null;
+	}
+
 }

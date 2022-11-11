@@ -23,7 +23,7 @@ public class LoadCountriesProcessor {
 		this.countryManager = new CountryManagerImpl();
 	}
 
-	public void loadCountriesIntoDb() throws Exception {
+	protected void loadCountriesIntoDb() throws Exception {
 		initialize();
 		String countriesFromApi = APIBaseClass.getInstance().doGetCall(ApiUrl.COUNTRIES_URL);
 		log.info("going to parse countries data from api");
@@ -44,7 +44,7 @@ public class LoadCountriesProcessor {
 		} catch (Exception e) {
 			log.error("Issue occured while processing countries", e);
 		}
-		log.debug("Countries count=" + countries.size());
+		log.debug("Success syncing Countries count=" + countries.size());
 		return countries;
 	}
 }

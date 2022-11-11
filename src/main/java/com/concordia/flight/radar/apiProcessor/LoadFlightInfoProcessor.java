@@ -15,7 +15,7 @@ import com.concordia.flight.radar.manager.FlightInfoManager;
 import com.concordia.flight.radar.managerImpl.FlightInfoManagerImpl;
 import com.concordia.flight.radar.pojo.FlightInfo;
 
-public class LoadFlightInfoProcessor {
+class LoadFlightInfoProcessor {
 	private static final Logger log = Logger.getLogger(LoadFlightInfoProcessor.class);
 
 	private FlightInfoManager flightInfoManager;
@@ -24,13 +24,13 @@ public class LoadFlightInfoProcessor {
 		flightInfoManager = new FlightInfoManagerImpl();
 	}
 
-	public void loadFlightInfoIntoDb() throws Exception {
+	protected void loadFlightInfoIntoDb() throws Exception {
 		initialize();
 		String countriesFromApi = APIBaseClass.getInstance().doGetCall(ApiUrl.FLIGHT_INFO_URL);
 		log.info("going to parse countries data from api");
 		List<FlightInfo> flightInfoList = parseDataFromApi(countriesFromApi);
 		flightInfoManager.flushAndFillFlightInfo(flightInfoList);
-		log.info("successfully sync countries in db");
+		log.info("successfully sync flight info in db");
 	}
 
 	private List<FlightInfo> parseDataFromApi(String flightInfoData) {
@@ -46,7 +46,6 @@ public class LoadFlightInfoProcessor {
 					flightInfo.setRegNumber(curr.getString("reg_number"));
 				if (curr.has("flag"))
 					flightInfo.setFlag(curr.getString("flag"));
-				System.out.println(flightInfo.getFlag());
 				flightInfo.setLatitude(curr.getDouble("lat"));
 				if (curr.has("lng"))
 					flightInfo.setLongitude(curr.getDouble("lng"));

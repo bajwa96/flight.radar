@@ -204,4 +204,31 @@ public class FlightInfo extends BasePojo {
 		this.status = status;
 	}
 
+	@Override
+	public String toString() {
+		StringBuffer str = new StringBuffer();
+		str.append("[flightInfoPkId:").append(flightInfoPkId).append(", ");
+		str.append("hex:").append(hex).append(", ");
+		str.append("regNumber:").append(regNumber).append(", ");
+		str.append("flag:").append(flag).append(", ");
+		str.append("latitude:").append(latitude).append(", ");
+		str.append("longitude:").append(longitude).append(", ");
+		str.append("altitude:").append(altitude).append(", ");
+		str.append("direction:").append(direction).append(", ");
+		str.append("speed:").append(speed).append(", ");
+		str.append("verticalVelocity:").append(verticalVelocity).append(", ");
+		str.append("squawk:").append(squawk).append(", ");
+		str.append("flightNumber:").append(flightNumber).append(", ");
+		str.append("flightIcao:").append(flightIcao).append(", ");
+		str.append("flightIcao:").append(flightIcao).append(", ");
+		str.append("flightIata:").append(flightIata).append(", ");
+		str.append("depIcao:").append(depIcao).append(", ");
+		str.append("depIata:").append(depIata).append(", ");
+		str.append("arrIcao:").append(arrIcao).append(", ");
+		str.append("airlineIcao:").append(airlineIcao).append(", ");
+		str.append("airlineIata:").append(airlineIata).append(", ");
+		str.append("aircraftIcao:").append(aircraftIcao).append("]");
+		return str.toString();
+	}
+
 }

@@ -3,6 +3,7 @@ package com.concordia.flight.radar.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -78,6 +79,10 @@ public class FlightInfoDaoImpl implements FlightInfoDao {
 	public List<FlightInfo> retrieveRecords() throws Exception {
 		PreparedStatement preparedStatement = conn.prepareStatement("select * FROM flight_info;");
 		ResultSet rs = preparedStatement.executeQuery();
+		return prepareFlightInfoObjectFromResultSet(rs);
+	}
+
+	private List<FlightInfo> prepareFlightInfoObjectFromResultSet(ResultSet rs) throws SQLException {
 		LinkedList<FlightInfo> flightInfolst = new LinkedList<>();
 		while (rs.next()) {
 			var curr = rs;
@@ -111,5 +116,14 @@ public class FlightInfoDaoImpl implements FlightInfoDao {
 			flightInfolst.add(flightInfo);
 		}
 		return flightInfolst;
+	}
+
+	@Override
+	public List<FlightInfo> retrieveRecordsFromDbBasedOnCountryNameOrCode(String countryNameOrCode) throws Exception {
+		String query = "select *  from flight_info fi inner join Country c on c.code = fi.flag where c.code like '%"
+				+ countryNameOrCode + "' or c.name like '" + countryNameOrCode + "';";
+		PreparedStatement preparedStatement = conn.prepareStatement(query);
+		ResultSet rs = preparedStatement.executeQuery();
+		return prepareFlightInfoObjectFromResultSet(rs);
 	}
 }

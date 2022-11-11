@@ -9,7 +9,6 @@ public class Country extends BasePojo{
 	}
 	
 	private String countryName;
-	
 	private String code;
 	private String code3;
 	public String getCountryName() {
@@ -29,5 +28,13 @@ public class Country extends BasePojo{
 	}
 	public void setCode3(String code3) {
 		this.code3 = code3;
+	}
+	@Override
+	public String toString() {
+		StringBuffer str = new StringBuffer();
+		str.append("[countryName:").append(countryName).append(", ");
+		str.append("code:").append(code).append(", ");
+		str.append("code3:").append(code3).append("]");
+		return str.toString();
 	}
 }
