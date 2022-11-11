@@ -21,7 +21,6 @@ import com.concordia.flight.radar.exceptions.ResourceNotFoundException;
  * This class is meant to be extended by all REST resource "controllers".
  * It contains exception mapping and other common REST API functionality
  */
-//@ControllerAdvice?
 public abstract class AbstractRestHandler implements ApplicationEventPublisherAware {
 
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -55,7 +54,6 @@ public abstract class AbstractRestHandler implements ApplicationEventPublisherAw
         this.eventPublisher = applicationEventPublisher;
     }
 
-    //todo: replace with exception mapping
     public static <T> T checkResourceFound(final T resource) {
         if (resource == null) {
             throw new ResourceNotFoundException("resource not found");

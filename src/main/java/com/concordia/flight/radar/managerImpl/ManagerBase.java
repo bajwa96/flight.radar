@@ -6,7 +6,13 @@ import org.apache.log4j.Logger;
 
 import com.concordia.flight.radar.dbUtils.CommonDbUtil;
 
-public class ManagerBase extends CommonDbUtil {
+/**
+ * 
+ * This class contains common methods used by manager layer in order to commit
+ * the transaction, roll-back transaction
+ *
+ */
+public abstract class ManagerBase extends CommonDbUtil {
 	private static final Logger log = Logger.getLogger(ManagerBase.class);
 
 	protected void preConfig() throws Exception {
@@ -28,6 +34,5 @@ public class ManagerBase extends CommonDbUtil {
 		} catch (SQLException e) {
 			log.error("Failed to rollback transaction", e);
 		}
-
 	}
 }

@@ -3,18 +3,25 @@ package com.concordia.flight.radar.dbUtils;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.annotation.PreDestroy;
+
+import org.springframework.stereotype.Component;
+
+@Component
 public class CommonDbUtil {
-	protected static Connection conn;
+	protected Connection conn;
 
 	public CommonDbUtil() {
 		conn = DBConnection.getInstance().getConnection();
 	}
-	
+
 	protected void newDBConnection() {
 		conn = DBConnection.getInstance().getConnection();
 	}
-	
-	public static void closeConnection() {
+
+	@PreDestroy
+	public void closeConnection() {
+		System.out.println("Conn CLosed");
 		try {
 			conn.close();
 		} catch (SQLException e) {
@@ -25,5 +32,5 @@ public class CommonDbUtil {
 	public Connection getConn() {
 		return conn;
 	}
-	
+
 }

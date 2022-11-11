@@ -1,5 +1,6 @@
 package com.concordia.flight.radar.pojo;
 
+@Deprecated
 public class SamplePerson {
 
 	private int id;

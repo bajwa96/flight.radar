@@ -16,12 +16,9 @@ import org.springframework.context.annotation.Configuration;
 public class MainApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) throws Exception {
-
 		BasicConfigurator.configure();
-		System.out.println("Welcome to Spring Boot");
 		SpringApplication sa = new SpringApplication(MainApplication.class);
 		sa.run(args);
-
 	}
 
 	@Override
