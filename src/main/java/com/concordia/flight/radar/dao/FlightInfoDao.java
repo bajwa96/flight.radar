@@ -11,6 +11,8 @@ public interface FlightInfoDao {
 	void createFlightInfoTable();
 
 	void deleteRecordsFromFlightInfo() throws Exception;
+
+	List<FlightInfo> retrieveRecords() throws Exception;;
 	
 
 }

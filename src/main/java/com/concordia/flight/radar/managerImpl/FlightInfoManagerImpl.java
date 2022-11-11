@@ -31,8 +31,6 @@ public class FlightInfoManagerImpl extends ManagerBase implements FlightInfoMana
 	public void flushAndFillFlightInfo(List<FlightInfo> flightInfoList) throws Exception {
 		try {
 			preConfig();
-			
-			
 			List<List<FlightInfo>> flightInfoChunkList = chunkList(flightInfoList, 500);
 			flightInfoDao.deleteRecordsFromFlightInfo();
 			for(List<FlightInfo> currList : flightInfoChunkList) {
@@ -57,6 +55,21 @@ public class FlightInfoManagerImpl extends ManagerBase implements FlightInfoMana
 	        chunkList.add(list.subList(i, i + chunkSize >= list.size() ? list.size()-1 : i + chunkSize));
 	    }
 	    return chunkList;
+	}
+
+	@Override
+	public List<FlightInfo> retrieveRecords() {
+		try {
+			preConfig();
+			List<FlightInfo> obj=  flightInfoDao.retrieveRecords();
+			postConfig();
+			return obj;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			failedTransaactionHandler();
+		}
+		return null;
 	}
 
 }

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class CommonDbUtil {
-	protected Connection conn;
+	protected static Connection conn;
 
 	public CommonDbUtil() {
 		conn = DBConnection.getInstance().getConnection();
@@ -14,7 +14,7 @@ public class CommonDbUtil {
 		conn = DBConnection.getInstance().getConnection();
 	}
 	
-	public void closeConnection() {
+	public static void closeConnection() {
 		try {
 			conn.close();
 		} catch (SQLException e) {

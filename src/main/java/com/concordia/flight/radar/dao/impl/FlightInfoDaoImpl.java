@@ -2,6 +2,9 @@ package com.concordia.flight.radar.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -15,12 +18,13 @@ public class FlightInfoDaoImpl implements FlightInfoDao {
 	public FlightInfoDaoImpl(Connection conn) {
 		this.conn = conn;
 	}
+
 	private static final Logger log = Logger.getLogger(FlightInfoDaoImpl.class);
-	
+
 	private final String INSERT_QUERY = "INSERT INTO flight_info\n"
 			+ "(hex, flag, reg_number, latitude, longitude, altitude, direction, vertical_velocity, squawk, flight_number, flight_icao,"
-			+ " flight_iata, dep_icao, dep_iata, arr_icao, airline_icao, updated, status, update_user, update_time, create_user, create_time, aircraft_icao)\n"
-			+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);\n" + "";
+			+ " flight_iata, dep_icao, dep_iata, arr_icao, airline_icao, updated, status, update_user, update_time, create_user, create_time, aircraft_icao,speed)\n"
+			+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);\n" + "";
 
 	@Override
 	public void createOrUpdateFlightInfo(List<FlightInfo> flightInfoList) throws Exception {
@@ -50,6 +54,7 @@ public class FlightInfoDaoImpl implements FlightInfoDao {
 			preparedStatement.setObject(21, flighInfo.getCreateUser());
 			preparedStatement.setObject(22, flighInfo.getCreateTime());
 			preparedStatement.setObject(23, flighInfo.getAircraftIcao());
+			preparedStatement.setObject(24, flighInfo.getSpeed());
 			preparedStatement.addBatch();
 		}
 		preparedStatement.executeBatch();
@@ -69,4 +74,42 @@ public class FlightInfoDaoImpl implements FlightInfoDao {
 		log.debug("Success deleted records from flight_info table");
 	}
 
+	@Override
+	public List<FlightInfo> retrieveRecords() throws Exception {
+		PreparedStatement preparedStatement = conn.prepareStatement("select * FROM flight_info;");
+		ResultSet rs = preparedStatement.executeQuery();
+		LinkedList<FlightInfo> flightInfolst = new LinkedList<>();
+		while (rs.next()) {
+			var curr = rs;
+			FlightInfo flightInfo = new FlightInfo();
+			flightInfo.setHex(curr.getString("hex"));
+			flightInfo.setRegNumber(curr.getString("reg_number"));
+			flightInfo.setFlag(curr.getString("flag"));
+			flightInfo.setLatitude(curr.getDouble("latitude"));
+			flightInfo.setLongitude(curr.getDouble("longitude"));
+			flightInfo.setAltitude(curr.getInt("altitude"));
+			flightInfo.setDirection(curr.getInt("direction"));
+			flightInfo.setSpeed(curr.getInt("speed"));
+			flightInfo.setVerticalVelocity(curr.getInt("vertical_velocity"));
+			flightInfo.setSquawk(curr.getString("squawk"));
+			flightInfo.setFlightNumber(curr.getString("flight_number"));
+			flightInfo.setFlightIcao(curr.getString("flight_icao"));
+			flightInfo.setFlightIata(curr.getString("flight_iata"));
+			flightInfo.setDepIata(curr.getString("dep_icao"));
+			flightInfo.setDepIata(curr.getString("dep_iata"));
+			flightInfo.setArrIcao(curr.getString("arr_icao"));
+			flightInfo.setAirlineIata(curr.getString("airline_iata"));
+			flightInfo.setAirlineIcao(curr.getString("airline_icao"));
+			flightInfo.setUpdated(curr.getDate("updated"));
+			flightInfo.setAircraftIcao(curr.getString("aircraft_icao"));
+			flightInfo.setStatus(curr.getString("status"));
+			flightInfo.setCreateTime(new Date());
+			flightInfo.setCreateUser(this.getClass().getTypeName());
+			flightInfo.setUpdateTime(new Date());
+			flightInfo.setUpdateUser(this.getClass().getTypeName());
+
+			flightInfolst.add(flightInfo);
+		}
+		return flightInfolst;
+	}
 }
