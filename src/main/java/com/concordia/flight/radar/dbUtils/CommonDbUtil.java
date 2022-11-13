@@ -5,10 +5,14 @@ import java.sql.SQLException;
 
 import javax.annotation.PreDestroy;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
+
+import com.concordia.flight.radar.managerImpl.FlightInfoManagerImpl;
 
 @Component
 public class CommonDbUtil {
+	private static final Logger log = Logger.getLogger(FlightInfoManagerImpl.class);
 	protected Connection conn;
 
 	public CommonDbUtil() {
@@ -21,11 +25,10 @@ public class CommonDbUtil {
 
 	@PreDestroy
 	public void closeConnection() {
-		System.out.println("Conn CLosed");
 		try {
 			conn.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error("Unable to close db connection", e);
 		}
 	}
 

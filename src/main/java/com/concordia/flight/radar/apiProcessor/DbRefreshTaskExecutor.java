@@ -6,20 +6,29 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DbRefreshTaskExecutor {
 
+	private static final Logger log = Logger.getLogger(DbRefreshTaskExecutor.class);
+
 	public static DbRefreshTaskExecutor instance;
 
 	public static DbRefreshTaskExecutor getInstance() {
+		log.debug("Inside getInstance for db");
 		if (instance == null) {
+			log.debug("Creating new instance for db connection");
 			instance = new DbRefreshTaskExecutor();
 		}
 		return instance;
 	}
 
+	/**
+	 * since this is singleton class so making the constructor as private Please
+	 * refer to: {@code getInstance()}
+	 */
 	private DbRefreshTaskExecutor() {
 	}
 
@@ -33,7 +42,7 @@ public class DbRefreshTaskExecutor {
 
 	@PostConstruct
 	public void createAutoDbRefreshRequest() {
-		
+
 		initialise();
 		ScheduledExecutorService ses = Executors.newScheduledThreadPool(2);
 
@@ -41,22 +50,20 @@ public class DbRefreshTaskExecutor {
 			try {
 				loadCountriesDataIntoDb.loadCountriesIntoDb();
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.error("Error while loading Countries Data to db", e);
 			}
-			System.out.println("[Scheduled Task]Sucess updating countries");
+			log.debug("[Scheduled Task]Sucess updating countries");
 		};
 
 		Runnable task2 = () -> {
 			try {
 				loadFlightInfoProcessor.loadFlightInfoIntoDb();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("Error while loading Flight Info Data to db", e);
 			}
-			System.out.println("[Scheduled Task]Sucess updating flight");
+			log.debug("[Scheduled Task]Sucess updating flightInfo");
 		};
 
-		// since countries code will not change rapidly
 		ses.scheduleAtFixedRate(task1, 0, 120, TimeUnit.MINUTES);
 		ses.scheduleAtFixedRate(task2, 0, 2, TimeUnit.MINUTES);
 	}

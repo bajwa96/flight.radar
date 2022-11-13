@@ -26,7 +26,7 @@ public class LoadCountriesProcessor {
 	protected void loadCountriesIntoDb() throws Exception {
 		initialize();
 		String countriesFromApi = APIBaseClass.getInstance().doGetCall(ApiUrl.COUNTRIES_URL);
-		log.info("going to parse countries data from api");
+		log.debug("Going to parse countries data from api");
 		List<Country> countries = parseDataFromApi(countriesFromApi);
 		countryManager.createOrUpdate(countries);
 		log.info("successfully sync countries in db");

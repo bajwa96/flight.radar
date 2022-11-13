@@ -27,7 +27,7 @@ class LoadFlightInfoProcessor {
 	protected void loadFlightInfoIntoDb() throws Exception {
 		initialize();
 		String countriesFromApi = APIBaseClass.getInstance().doGetCall(ApiUrl.FLIGHT_INFO_URL);
-		log.info("going to parse countries data from api");
+		log.debug("going to parse countries data from api");
 		List<FlightInfo> flightInfoList = parseDataFromApi(countriesFromApi);
 		flightInfoManager.flushAndFillFlightInfo(flightInfoList);
 		log.info("successfully sync flight info in db");

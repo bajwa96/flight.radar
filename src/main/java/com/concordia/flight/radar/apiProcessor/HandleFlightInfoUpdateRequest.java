@@ -13,7 +13,7 @@ public class HandleFlightInfoUpdateRequest {
 
 	private FlightInfoManager flightInfoManager;
 
-	private HandleFlightInfoUpdateRequest() {
+	public HandleFlightInfoUpdateRequest() {
 		this.flightInfoManager = new FlightInfoManagerImpl();
 	}
 

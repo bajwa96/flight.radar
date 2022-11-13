@@ -3,12 +3,15 @@ package com.concordia.flight.radar.managerImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.concordia.flight.radar.dao.FlightInfoDao;
 import com.concordia.flight.radar.dao.impl.FlightInfoDaoImpl;
 import com.concordia.flight.radar.manager.FlightInfoManager;
 import com.concordia.flight.radar.pojo.FlightInfo;
 
 public class FlightInfoManagerImpl extends ManagerBase implements FlightInfoManager {
+	private static final Logger log = Logger.getLogger(FlightInfoManagerImpl.class);
 	private FlightInfoDao flightInfoDao;
 
 	public FlightInfoManagerImpl() {
@@ -23,6 +26,7 @@ public class FlightInfoManagerImpl extends ManagerBase implements FlightInfoMana
 			postConfig();
 		} catch (Exception e) {
 			failedTransaactionHandler();
+			log.error("Unable to create flight info table",e);
 		}
 
 	}
@@ -39,8 +43,7 @@ public class FlightInfoManagerImpl extends ManagerBase implements FlightInfoMana
 			
 			postConfig();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Unable to flush And Fill FlightInfo records",e);
 			failedTransaactionHandler();
 		}
 
@@ -65,8 +68,7 @@ public class FlightInfoManagerImpl extends ManagerBase implements FlightInfoMana
 			postConfig();
 			return obj;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Unable to retrieve FlightInfo records",e);
 			failedTransaactionHandler();
 		}
 		return null;
@@ -80,8 +82,7 @@ public class FlightInfoManagerImpl extends ManagerBase implements FlightInfoMana
 			postConfig();
 			return obj;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Unable to retrieve FlightInfo records based on country name or code",e);
 			failedTransaactionHandler();
 		}
 		return null;

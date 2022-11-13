@@ -33,9 +33,6 @@ public class UpdateHistoryDaoImpl implements UpdateHistoryDao {
 			Timestamp timestamp = rs.getTimestamp(1);
 			ds = new java.util.Date(timestamp.getTime());
 		}
-		// TODO:
-		System.out.println(ds);
-		
 		return ds;
 	}
 

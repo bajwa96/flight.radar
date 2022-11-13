@@ -51,8 +51,7 @@ public class DBConnection {
 				if (instance.getConnection().isClosed())
 					instance = new DBConnection();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("Db connection failed", e);
 			}
 		return instance;
 	}
@@ -74,7 +73,6 @@ public class DBConnection {
 			log.info("Opening connection");
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
-				System.out.print(dbProperties);
 				conn = DriverManager.getConnection(dbProperties.get("jdbc.url"), dbProperties.get("jdbc.username"),
 						dbProperties.get("jdbc.password"));
 			} catch (Exception e) {
