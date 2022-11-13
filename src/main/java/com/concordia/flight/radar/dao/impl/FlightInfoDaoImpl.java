@@ -126,4 +126,14 @@ public class FlightInfoDaoImpl implements FlightInfoDao {
 		ResultSet rs = preparedStatement.executeQuery();
 		return prepareFlightInfoObjectFromResultSet(rs);
 	}
+
+	@Override
+	public List<FlightInfo> retrieveRecordsFromDbBasedOnArrAirportIcao(String airportIcao) throws Exception {
+		String query = "select * from flightRadar.flight_info fi where fi.arr_icao='"
+				+ airportIcao + "';";
+		PreparedStatement preparedStatement = conn.prepareStatement(query);
+		ResultSet rs = preparedStatement.executeQuery();
+		return prepareFlightInfoObjectFromResultSet(rs);
+	}
+
 }

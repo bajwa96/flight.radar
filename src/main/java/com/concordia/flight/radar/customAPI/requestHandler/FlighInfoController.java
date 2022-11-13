@@ -24,11 +24,10 @@ public class FlighInfoController extends AbstractRestHandler {
 	@Autowired
 	private HandleFlightInfoUpdateRequest handleFlightInfoUpdateRequest;
 
-	@RequestMapping(method = RequestMethod.GET, produces = { "application/json",
-			"application/xml" })
+	@RequestMapping(method = RequestMethod.GET, produces = { "application/json", "application/xml" })
 	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody List<FlightInfo> getFlightInfo(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public @ResponseBody List<FlightInfo> getFlightInfo(HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		List<FlightInfo> result = handleFlightInfoUpdateRequest.retrieveRecordsFromDb();
 		checkResourceFound(result);
 		return result;
@@ -37,10 +36,24 @@ public class FlighInfoController extends AbstractRestHandler {
 	@RequestMapping(value = "country/{countryNameOrCode}", method = RequestMethod.GET, produces = { "application/json",
 			"application/xml" })
 	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody List<FlightInfo> getFlightInfoCountrySpecific(@PathVariable("countryNameOrCode") String countryNameOrCode, HttpServletRequest request,
+	public @ResponseBody List<FlightInfo> getFlightInfoCountrySpecific(
+			@PathVariable("countryNameOrCode") String countryNameOrCode, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		List<FlightInfo> result = handleFlightInfoUpdateRequest.retrieveRecordsFromDbBasedOnCountryNameOrCode(countryNameOrCode);
+		List<FlightInfo> result = handleFlightInfoUpdateRequest
+				.retrieveRecordsFromDbBasedOnCountryNameOrCode(countryNameOrCode);
 		checkResourceFound(result);
 		return result;
 	}
+
+	@RequestMapping(value = "ArrivalAirport/{airportIcao}", method = RequestMethod.GET, produces = { "application/json",
+			"application/xml" })
+	@ResponseStatus(HttpStatus.OK)
+	public @ResponseBody List<FlightInfo> getFlightInfoArrAirportSpecific(
+			@PathVariable("airportIcao") String airportIcao, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		List<FlightInfo> result = handleFlightInfoUpdateRequest.retrieveRecordsFromDbBasedOnArrAirportIcao(airportIcao);
+		checkResourceFound(result);
+		return result;
+	}
+
 }
