@@ -16,6 +16,12 @@ PreRequists:
 Basic Implementation for Sync Countries, Flight Info data from api to db.
 Retrieving data from db using JDBC connection from mysql server.
 Created three api as follows:
-  Fetch all flight info records - http://localhost:8090/getFlightInfo
-  Fetch flight info records based on country name or country code filter - http://localhost:8090/getFlightInfo/country/india
-  Fetch flight info records based on arrival airport icta code - http://localhost:8090/getFlightInfo/ArrivalAirport/cyul
+
+  Fetch all flight info records
+  http://localhost:8090/getFlightInfo
+  
+  Fetch flight info records based on country name or country code filter
+  http://localhost:8090/getFlightInfo/country/india
+  
+  Fetch flight info records based on arrival airport icta code
+  http://localhost:8090/getFlightInfo/ArrivalAirport/cyul
