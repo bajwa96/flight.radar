@@ -63,13 +63,10 @@ public class FlightInfoManagerImpl extends ManagerBase implements FlightInfoMana
 	@Override
 	public List<FlightInfo> retrieveRecords() {
 		try {
-			preConfig();
 			List<FlightInfo> obj=  flightInfoDao.retrieveRecords();
-			postConfig();
 			return obj;
 		} catch (Exception e) {
 			log.error("Unable to retrieve FlightInfo records",e);
-			failedTransaactionHandler();
 		}
 		return null;
 	}
@@ -77,13 +74,21 @@ public class FlightInfoManagerImpl extends ManagerBase implements FlightInfoMana
 	@Override
 	public List<FlightInfo> retrieveRecordsFromDbBasedOnCountryNameOrCode(String countryNameOrCode) {
 		try {
-			preConfig();
 			List<FlightInfo> obj=  flightInfoDao.retrieveRecordsFromDbBasedOnCountryNameOrCode(countryNameOrCode);
-			postConfig();
 			return obj;
 		} catch (Exception e) {
 			log.error("Unable to retrieve FlightInfo records based on country name or code",e);
-			failedTransaactionHandler();
+		}
+		return null;
+	}
+
+	@Override
+	public List<FlightInfo> retrieveRecordsFromDbBasedOnArrAirportIcao(String airportIcao) {
+		try {
+			List<FlightInfo> obj=  flightInfoDao.retrieveRecordsFromDbBasedOnArrAirportIcao(airportIcao);
+			return obj;
+		} catch (Exception e) {
+			log.error("Unable to retrieve FlightInfo records based on airport icao code code",e);
 		}
 		return null;
 	}

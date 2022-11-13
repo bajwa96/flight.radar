@@ -25,4 +25,8 @@ public class HandleFlightInfoUpdateRequest {
 		return flightInfoManager.retrieveRecordsFromDbBasedOnCountryNameOrCode(countryNameOrCode);
 	}
 
+	public List<FlightInfo> retrieveRecordsFromDbBasedOnArrAirportIcao(String airportIcao) {
+		return flightInfoManager.retrieveRecordsFromDbBasedOnArrAirportIcao(airportIcao);
+	}
+
 }

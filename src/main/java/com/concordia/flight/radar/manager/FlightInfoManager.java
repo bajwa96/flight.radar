@@ -39,4 +39,11 @@ public interface FlightInfoManager {
 	 */
 	List<FlightInfo> retrieveRecordsFromDbBasedOnCountryNameOrCode(String countryNameOrCode);
 
+	/**
+	 * Retrieve FlightInfo Based on Arrival/Destination Airport ICAO code
+	 * @param airportIcao
+	 * @return
+	 */
+	List<FlightInfo> retrieveRecordsFromDbBasedOnArrAirportIcao(String airportIcao);
+
 }

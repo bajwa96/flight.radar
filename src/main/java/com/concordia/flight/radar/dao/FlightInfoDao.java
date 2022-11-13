@@ -15,6 +15,7 @@ public interface FlightInfoDao {
 	List<FlightInfo> retrieveRecords() throws Exception;
 
 	List<FlightInfo> retrieveRecordsFromDbBasedOnCountryNameOrCode(String countryNameOrCode) throws Exception;
-	
+
+	List<FlightInfo> retrieveRecordsFromDbBasedOnArrAirportIcao(String airportIcao) throws Exception;
 
 }

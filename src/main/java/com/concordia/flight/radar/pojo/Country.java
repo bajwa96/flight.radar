@@ -1,13 +1,23 @@
 package com.concordia.flight.radar.pojo;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Country extends BasePojo{
-	
+	public Country(){
+		
+	}
 	public Country(String countryName, String code, String code3){
 		this.countryName=countryName;
 		this.code=code;
 		this.code3=code3;
 	}
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String countryName;
 	private String code;
 	private String code3;
