@@ -1,4 +1,4 @@
-package flight.radar;
+package com.concordia.flight.radar.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.concordia.flight.radar.pojo.Country;
 import com.concordia.flight.radar.pojo.FlightInfo;
