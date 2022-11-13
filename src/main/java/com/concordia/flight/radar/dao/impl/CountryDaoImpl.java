@@ -15,8 +15,8 @@ public class CountryDaoImpl implements CountryDao {
 	private static final Logger log = Logger.getLogger(CountryDaoImpl.class);
 
 	private static final String INSERT_QUERY = "INSERT IGNORE INTO flightRadar.Country\n"
-			+ "(name, code, code3, update_time, update_user, create_time, create_user)\n" + "VALUES(?, ?, ?, ?, ?, ?, ?)"
-			+ "ON DUPLICATE KEY UPDATE name=?, code3=?, update_user=?, update_time=?;";
+			+ "(name, code, code3, update_time, update_user, create_time, create_user)\n"
+			+ "VALUES(?, ?, ?, ?, ?, ?, ?)" + "ON DUPLICATE KEY UPDATE name=?, code3=?, update_user=?, update_time=?;";
 
 	private Connection conn;
 
@@ -34,8 +34,7 @@ public class CountryDaoImpl implements CountryDao {
 				+ "  `createUser` varchar(100) DEFAULT 'System',\n" + "  PRIMARY KEY (`code`)\n" + ") ";
 		Statement temp;
 		temp = conn.createStatement();
-		boolean isSuccess = temp.execute(query);
-		System.out.print("Create Country Table, success:" + isSuccess);
+		temp.execute(query);
 	}
 
 	@Override

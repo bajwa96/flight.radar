@@ -2,6 +2,8 @@ package com.concordia.flight.radar.managerImpl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.concordia.flight.radar.dao.CountryDao;
 import com.concordia.flight.radar.dao.impl.CountryDaoImpl;
 import com.concordia.flight.radar.manager.CountryManager;
@@ -9,6 +11,7 @@ import com.concordia.flight.radar.pojo.Country;
 
 public class CountryManagerImpl extends ManagerBase implements CountryManager {
 
+	private static final Logger log = Logger.getLogger(CountryManagerImpl.class);
 	public CountryManagerImpl() {
 		countryDao = new CountryDaoImpl(conn);
 	}
@@ -22,8 +25,7 @@ public class CountryManagerImpl extends ManagerBase implements CountryManager {
 			countryDao.createCountryTable();
 			postConfig();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Unable to create country table", e);
 		}
 
 	}
@@ -35,8 +37,7 @@ public class CountryManagerImpl extends ManagerBase implements CountryManager {
 			countryDao.createOrUpdate(countries);
 			postConfig();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Unable to create records in country table", e);
 		}
 
 	}
