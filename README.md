@@ -25,3 +25,6 @@ Created three api as follows:
   
   Fetch flight info records based on arrival airport icta code
   http://localhost:8090/getFlightInfo/ArrivalAirport/cyul
+
+Video overview of this project could be found here
+https://youtu.be/UWLpUN18RB8
